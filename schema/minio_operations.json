@@ -1,0 +1,19 @@
+{
+    "MAKE_BUCKET": {
+        "ENDPOINT": "make_bucket",
+        "METHOD": "",
+        "REQUEST_BODY_SCHEMA": {
+            "bucket_name": "bucket_name",
+            "location": "location",
+            "object_lock": "object_lock"
+        },
+        "SUCCESS_CODE": 200
+    },
+    "LIST_BUCKETS": {
+        "ENDPOINT": "list_buckets",
+        "METHOD": "",
+        "REQUEST_BODY_SCHEMA": {
+        },
+        "SUCCESS_CODE": 200
+    }
+}

@@ -891,6 +891,7 @@ RGW_ADMIN_OPERATIONS_MAPPING_SCHEMA = '{}/schema/rgw_admin_api_operations.json'.
 IAM_OPERATIONS_MAPPING_SCHEMA = '{}/schema/iam_operations_mapping.json'.format(CSM_PATH)
 SUPPRESS_PAYLOAD_SCHEMA = '{}/schema/suppress_payload.json'.format(CSM_PATH)
 S3_CLIENT_ERROR_MSG = 'Unable to process the request'
+MINIO_OPERATIONS_MAPPING_SCHEMA = '{}/schema/minio_operations.json'.format(CSM_PATH)
 
 # S3 Operations
 CREATE_USER_OPERATION = 'CREATE_USER'
@@ -999,3 +1000,8 @@ RETRY_SLEEP_DURATION   = 'RETRY>sleep_duration'
 ERROR_CODE = "error_code"
 MESSAGE_ID = "message_id"
 JSON_ERROR = "Unable to parse request body, Malformed request body received."
+
+
+BUCKET_NAME = "bucket_name"
+LOCATION = "location"
+OBJECT_LOCK = "object_lock"

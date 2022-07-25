@@ -9,6 +9,7 @@
             "sysconfig": ["list", "update", "delete"],
             "users": ["create", "list", "update", "delete"],
             "s3accounts": ["create", "list", "update", "delete"],
+            "s3buckets": ["list", "update", "delete", "create"],
             "auditlog": ["list", "read"],
             "system": ["list", "update"],
             "notification": ["update"],
