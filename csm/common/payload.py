@@ -212,9 +212,19 @@ class Payload:
     def _get(self, key, data):
         """Obtain value for the given key."""
         k = key.split('.', 1)
-        if k[0] not in data.keys():
-            return None
-        return self._get(k[1], data[k[0]]) if len(k) > 1 else data[k[0]]
+        try:
+            if not isinstance(data, self._doc._type):
+                return None
+            if k[0] not in data.keys():
+                return None
+            return self._get(k[1], data[k[0]]) if len(k) > 1 else data[k[0]]
+        except AttributeError:
+            if isinstance(data, list):
+                index = next((i for i,d in enumerate(data) if k[0] in d), None)
+                if index is None:
+                    return None
+                return self._get(k[1], data[index][k[0]]) if len(k) > 1 else \
+                    data[index][k[0]]
 
     def get(self, key):
         if self._data is None:
