@@ -9,42 +9,6 @@
       "permissions_tag": "list",
       "args": [
         {
-          "flag": "-d",
-          "dest": "duration",
-          "nargs": "+",
-          "type": "str",
-          "help": "Time period, for which we request alerts. Format: <x>s <y>m <z>h <q>d. Where x, y, z, q is amounts of seconds, minutes, hours, days respectively. Past 60 seconds alerts will be displayed if not set explicitly.",
-          "default": "60s",
-          "params": true
-        },
-        {
-          "flag": "-l",
-          "dest": "limit",
-          "nargs": "+",
-          "type": "int",
-          "help": "No. of Alerts to be Displayed on Terminal. 1000 Alerts will be displayed if not set explicitly.",
-          "default": "1000",
-          "params": true
-        },
-        {
-          "flag": "-s",
-          "dest": "show_all",
-          "action": "store_const",
-          "help": "Display All Alerts",
-          "default": "false",
-          "const": "true",
-          "params": true
-        },
-        {
-          "flag": "-a",
-          "dest": "show_active",
-          "action": "store_const",
-          "help": "Display Active Alerts",
-          "default": "false",
-          "const": "true",
-          "params": true
-        },
-        {
           "flag": "args",
           "default": [],
           "suppress_help": true,
@@ -67,7 +31,7 @@
       "comm": {
         "type": "rest",
         "method": "get",
-        "target": "/{version}/alerts",
+        "target": "/halo/alerts",
         "version": "v2"
       },
       "output": {
@@ -75,7 +39,6 @@
           "headers": {
             "alert_uuid": "Alert Id",
             "description": "Description",
-            "support_message": "Remarks",
             "severity": "Severity",
             "state": "State",
             "acknowledged": "Acknowledged",
@@ -85,229 +48,6 @@
           "filters": "alerts"
         }
       }
-    },
-    {
-      "name": "history",
-      "description": "Displays alerts history on cli",
-      "need_confirmation": false,
-      "permissions_tag": "list",
-      "args": [
-        {
-          "flag": "-d",
-          "dest": "duration",
-          "nargs": "+",
-          "type": "str",
-          "help": "Time period, for which we request alerts. Format: <x>s <y>m <z>h <q>d. Where x, y, z, q is amounts of seconds, minutes, hours, days respectively. Past 60 seconds alerts will be displayed if not set explicitly.",
-          "default": "60s",
-          "params": true
-        },
-        {
-          "flag": "-l",
-          "dest": "limit",
-          "nargs": "+",
-          "type": "int",
-          "help": "No. of Alerts",
-          "default": "1000",
-          "params": true
-        },
-        {
-          "flag": "-s",
-          "dest": "start_date",
-          "nargs": "+",
-          "type": "str",
-          "help": "Start date for fetching alerts.",
-          "default": "",
-          "params": true
-        },
-        {
-          "flag": "-e",
-          "dest": "end_date",
-          "nargs": "+",
-          "type": "str",
-          "help": "End date for fetching alerts.",
-          "default": "",
-          "params": true
-        },
-        {
-          "flag": "-i",
-          "dest": "sensor_info",
-          "nargs": "+",
-          "type": "str",
-          "help": "Sensor info of the resource.",
-          "default": "",
-          "params": true
-        },
-        {
-          "flag": "args",
-          "default": [],
-          "suppress_help": true,
-          "nargs": "?",
-          "help": ""
-        },
-        {
-          "flag": "-f",
-          "dest": "format",
-          "help": "Format of output",
-          "default": "table",
-          "type": "str",
-          "choices": [
-            "table",
-            "xml",
-            "json"
-          ]
-        }
-      ],
-      "comm": {
-        "type": "rest",
-        "method": "get",
-        "target": "/{version}/alerts_history",
-        "version": "v2"
-      },
-      "output": {
-        "table": {
-          "headers": {
-            "alert_uuid": "Alert Id",
-            "health": "Health",
-            "description": "Description",
-            "severity": "Severity",
-            "state": "State",
-            "acknowledged": "Acknowledged",
-            "resolved": "Resolved",
-            "sensor_info": "Sensor Info",
-            "hostname": "Hostname"
-          },
-          "filters": "alerts"
-        }
-      }
-    },
-    {
-      "name": "acknowledge",
-      "description": "Acknowledged all the alerts",
-      "need_confirmation": true,
-      "permissions_tag": "update",
-      "args": [
-        {
-          "flag": "alerts_id",
-          "type": "str",
-          "help": "Alert Id"
-        },
-        {
-          "flag": "-ack",
-          "dest": "acknowledged",
-          "action": "store_const",
-          "help": "Marks alert as acknowledge, un-acknowledge when missing.",
-          "default": false,
-          "const": true,
-          "json": true
-        },
-        {
-          "flag": "args",
-          "default": [],
-          "suppress_help": true,
-          "nargs": "?",
-          "help": ""
-        }
-      ],
-      "comm": {
-        "type": "rest",
-        "method": "patch",
-        "target": "/{version}/alerts/{alerts_id}",
-        "version": "v2"
-      },
-      "output": {
-        "success": "Alert Updated."
-      }
-    },
-    {
-      "name": "comment",
-      "description": "Display/Add comment for an alert.",
-      "permissions_tag": "list",
-      "sub_commands": [
-        {
-          "name": "show",
-          "description": "Displays comments of a particular alert.",
-          "need_confirmation": false,
-          "permissions_tag": "list",
-          "args": [
-            {
-              "flag": "alert_uuid",
-              "type": "str",
-              "help": "Alert ID for which comments needs to displayed."
-            },
-            {
-              "flag": "args",
-              "default": [],
-              "suppress_help": true,
-              "nargs": "?",
-              "help": ""
-            },
-            {
-              "flag": "-f",
-              "dest": "format",
-              "help": "Format of Output",
-              "default": "table",
-              "type": "str",
-              "choices": [
-                "table",
-                "xml",
-                "json"
-              ]
-            }
-          ],
-          "comm": {
-            "type": "rest",
-            "method": "get",
-            "target": "/{version}/alerts/{alert_uuid}/comments",
-            "version": "v2"
-          },
-          "output": {
-            "table": {
-              "headers": {
-                "comment_id": "Comment Id",
-                "comment_text": "Comment",
-                "created_by": "Created By",
-                "created_time": "Created Time"
-              },
-              "filters": "comments"
-            }
-          }
-        },
-        {
-          "name": "add",
-          "description": "Add comment to an existing alert.",
-          "need_confirmation": true,
-          "permissions_tag": "update",
-          "args": [
-            {
-              "flag": "alert_uuid",
-              "type": "str",
-              "help": "Alert ID for which comment need's to added."
-            },
-            {
-              "flag": "comment_text",
-              "type": "str",
-              "help": "Comment to be added.",
-              "json": true
-            },
-            {
-              "flag": "args",
-              "default": [],
-              "suppress_help": true,
-              "nargs": "?",
-              "help": ""
-            }
-          ],
-          "comm": {
-            "type": "rest",
-            "method": "post",
-            "target": "/{version}/alerts/{alert_uuid}/comments",
-            "version": "v2"
-          },
-          "output": {
-            "success": "Alert Comment Added."
-          }
-        }
-      ]
     }
   ]
 }

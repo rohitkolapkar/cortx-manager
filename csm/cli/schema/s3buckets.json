@@ -30,13 +30,13 @@
       "comm": {
         "type": "rest",
         "method": "get",
-        "target": "/{version}/s3/bucket",
+        "target": "/{version}/buckets",
         "version": "v2"
       },
       "output": {
         "table": {
           "headers": {
-            "name": "Bucket Name"
+            "id": "Bucket id"
           },
           "filters": "buckets"
         }
@@ -51,9 +51,21 @@
         {
           "flag": "bucket_name",
           "type": "str",
-          "type_method": "Validators.bucket_name",
-          "type_target": "csm.cli.cli_validators",
           "help": "Give a bucket name to create.",
+          "json": true
+        },
+        {
+          "flag": "location",
+          "type": "str",
+          "help": "Location of the bucket.",
+          "nargs": "?",
+          "json": true
+        },
+        {
+          "flag": "object_lock",
+          "type": "bool",
+          "help": "Object lock on bucket.",
+          "nargs": "?",
           "json": true
         },
         {
@@ -66,39 +78,11 @@
       "comm": {
         "type": "rest",
         "method": "post",
-        "target": "/{version}/s3/bucket",
+        "target": "/{version}/buckets",
         "version": "v2"
       },
       "output": {
         "success": "Bucket created."
-      }
-    },
-    {
-      "name": "delete",
-      "description": "Delete the bucket",
-      "need_confirmation": false,
-      "permissions_tag": "delete",
-      "args": [
-        {
-          "flag": "bucket_name",
-          "type": "str",
-          "help": "Bucket Name"
-        },
-        {
-          "flag": "args",
-          "default": [],
-          "suppress_help": true,
-          "nargs": "?"
-        }
-      ],
-      "comm": {
-        "type": "rest",
-        "method": "delete",
-        "target": "/{version}/s3/bucket/{bucket_name}",
-        "version": "v2"
-      },
-      "output": {
-        "success": "Bucket deleted."
       }
     }
   ]

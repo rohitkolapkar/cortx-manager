@@ -25,7 +25,10 @@ class BucketsView(CsmView):
         Log.info(f"Handling list buckets GET request"
                  f" user_id: {self.request.session.credentials.user_id}")
         response = await self._service.list_buckets()
-        return response
+        bucket_list = list()
+        for bucket in response:
+            bucket_list.append({"id":bucket})
+        return {"buckets":bucket_list}
 
     @CsmAuth.permissions({Resource.S3BUCKETS: {Action.CREATE}})
     async def post(self):
