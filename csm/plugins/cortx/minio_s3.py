@@ -35,7 +35,7 @@ class HaloMinio():
             try:
                 client_method = getattr(self.client, api_operation['ENDPOINT'])
                 response = client_method(*args_list)
-                return response if response else {"message":"operation success"}
+                return response if response else {}
             except S3Error as err:
                 return {
                     "error_code":"halo",
