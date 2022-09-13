@@ -32,6 +32,7 @@ from aiohttp.web_middlewares import normalize_path_middleware
 from abc import ABC
 from secure import SecureHeaders
 from typing import Dict, Tuple
+from importlib import import_module
 from csm.core.providers.provider_factory import ProviderFactory
 from csm.core.providers.providers import Request, Response
 from csm.core.services.sessions import LoginService
@@ -51,6 +52,7 @@ from csm.core.controllers.routes import CsmRoutes
 from cortx.utils.errors import DataAccessError
 from marshmallow import ValidationError, fields
 from csm.core.controllers.validators import ValidateSchema
+from csm.common.payload import Json
 
 
 class CsmApi(ABC):
@@ -129,10 +131,19 @@ class CsmRestApi(CsmApi, ABC):
         )
 
         CsmRoutes.add_routes(CsmRestApi._app)
+        api_extension = Json(const.API_EXTENSIONS).load()
+        for solution in api_extension:
+            keys = api_extension.get(solution)
+            try:
+                import_path = import_module(keys.get("import_path"))
+                import_class = getattr(import_path, keys.get("class"))
+                import_method = getattr(import_class,keys.get("method"))
+                import_method(CsmRestApi._app)
+            except Exception as e:
+                Log.error(f"Unble to import the extension: {solution}")
         ApiRoutes.add_websocket_routes(
             CsmRestApi._app.router, CsmRestApi.process_websocket)
         ApiRoutes.add_swagger_ui_routes(CsmRestApi._app.router)
-
         CsmRestApi._app.on_response_prepare.append(CsmRestApi._hide_headers)
         CsmRestApi._app.on_startup.append(CsmRestApi._on_startup)
         CsmRestApi._app.on_shutdown.append(CsmRestApi._on_shutdown)

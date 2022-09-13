@@ -1,0 +1,12 @@
+{
+    "halo": {
+        "import_path": "HelloWorld.controllers.routes",
+        "class": "HelloWorldRoutes",
+        "method": "add_routes"
+    },
+    "xyz": {
+        "import_path": "xyz.controllers.dummy",
+        "class": "XyzRoutes",
+        "method": "add_routes"
+    }
+}

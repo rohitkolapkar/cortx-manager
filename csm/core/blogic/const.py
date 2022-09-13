@@ -893,6 +893,7 @@ RGW_ADMIN_OPERATIONS_MAPPING_SCHEMA = '{}/schema/rgw_admin_api_operations.json'.
 IAM_OPERATIONS_MAPPING_SCHEMA = '{}/schema/iam_operations_mapping.json'.format(CSM_PATH)
 SUPPRESS_PAYLOAD_SCHEMA = '{}/schema/suppress_payload.json'.format(CSM_PATH)
 S3_CLIENT_ERROR_MSG = 'Unable to process the request'
+API_EXTENSIONS = '{}/schema/api_extension.json'.format(CSM_PATH)
 
 # S3 Operations
 CREATE_USER_OPERATION = 'CREATE_USER'
